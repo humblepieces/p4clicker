@@ -18,6 +18,8 @@ export function Counter() {
     const dispatch = useAppDispatch();
     const [upgradeClickerValue,setUpgradeClickerValueAmount] = useState(5);
     const [incrementAmount, setIncrementAmount] = useState(1);
+    const [autoClick, setAutoClick] = useState(false)
+    const [upgradeAutoClickAmount, setUpgradeAutoClickAmount] = useState(50000);
 
     const incrementValue = Number(incrementAmount) || 0;
 
@@ -29,6 +31,17 @@ export function Counter() {
         }
     }
 
+    const handleAutoClick = () => {
+        if (count >= upgradeAutoClickAmount) {
+        setAutoClick(true);
+        setUpgradeAutoClickAmount(upgradeAutoClickAmount*2)
+        setInterval(() => {
+            dispatch(incrementByAmount(incrementAmount))
+        }, 2000)
+    }
+    }
+
+
     return (
         <div>
             <div className={'upgradeRow'}>
@@ -37,8 +50,8 @@ export function Counter() {
                     <label>{upgradeClickerValue}</label>
                 </div>
                 <div className={'autoClicker'}>
-                    <button> Buy AutoClick </button>
-                    <label>500000</label>
+                    <button onClick={handleAutoClick}> Buy AutoClick </button>
+                    <label>{upgradeAutoClickAmount}</label>
                 </div>
             </div>
             <div>
