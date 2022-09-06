@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {
     decrement,
     increment,
@@ -16,7 +16,7 @@ import p4logo from "../../p4logo.png"
 export function Counter() {
     const count = useAppSelector(selectCount);
     const dispatch = useAppDispatch();
-    const [upgradeClickerValue,setUpgradeClickerValueAmount] = useState(5);
+    const [upgradeClickerValue, setUpgradeClickerValueAmount] = useState(5);
     const [incrementAmount, setIncrementAmount] = useState(1);
     const [autoClick, setAutoClick] = useState(false)
     const [upgradeAutoClickAmount, setUpgradeAutoClickAmount] = useState(50000);
@@ -24,21 +24,22 @@ export function Counter() {
     const incrementValue = Number(incrementAmount) || 0;
 
     const handleUpgradeClicker = () => {
-        if(count >= upgradeClickerValue){
+        if (count >= upgradeClickerValue) {
             dispatch(decrementByAmount(upgradeClickerValue))
             setUpgradeClickerValueAmount(upgradeClickerValue * 4)
-            setIncrementAmount(incrementAmount+incrementAmount * 2)
+            setIncrementAmount(incrementAmount + incrementAmount * 2)
         }
     }
 
     const handleAutoClick = () => {
         if (count >= upgradeAutoClickAmount) {
-        setAutoClick(true);
-        setUpgradeAutoClickAmount(upgradeAutoClickAmount*2)
-        setInterval(() => {
-            dispatch(incrementByAmount(incrementAmount))
-        }, 2000)
-    }
+            dispatch(decrementByAmount(upgradeAutoClickAmount));
+            setAutoClick(true);
+            setUpgradeAutoClickAmount(upgradeAutoClickAmount * 2)
+            setInterval(() => {
+                dispatch(incrementByAmount(incrementAmount))
+            }, 2000)
+        }
     }
 
 
@@ -50,12 +51,13 @@ export function Counter() {
                     <label>{upgradeClickerValue}</label>
                 </div>
                 <div className={'autoClicker'}>
-                    <button onClick={handleAutoClick}> Buy AutoClick </button>
+                    <button onClick={handleAutoClick}> Buy AutoClick</button>
                     <label>{upgradeAutoClickAmount}</label>
                 </div>
             </div>
             <div>
-                <img src={p4logo} className="App-logo" alt="logo" onClick={() => dispatch(incrementByAmount(incrementAmount))} draggable={false}/>
+                <img src={p4logo} className="App-logo" alt="logo"
+                     onClick={() => dispatch(incrementByAmount(incrementAmount))} draggable={false}/>
             </div>
             <div className={styles.row}>
                 {/*<button*/}
